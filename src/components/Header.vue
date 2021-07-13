@@ -8,7 +8,7 @@
       @click="startCounter(); setRandomNumber()"
     />
     <StartResetButton
-      v-if="gameActive"
+      v-else
       @btn-click="$emit('change-game-button')"
       :buttonText="gameInActive ? 'Start' : 'Restart'"
       :buttonColor="gameInActive ? '#90ee90' : '#FED8B1'"
@@ -16,9 +16,9 @@
     />
   </div>
   <div class="initialInstruction" v-if="gameInActive">
-    {{ initialInstruction }}
+    <p>Press Start to Begin</p>
   </div>
-  <div class="gameStartTimer" v-if="gameActive">{{ gameStartTimer }}</div>
+  <div class="gameStartTimer" v-else>{{ gameStartTimer }}</div>
 </template>
 
 <script>
@@ -34,7 +34,7 @@ export default {
     gameActive: Boolean,
   },
   computed: {
-    ...mapState(["gameStartTimer", "initialInstruction"]),
+    ...mapState(["gameStartTimer"]),
   },
   methods: {
     ...mapMutations(["setRandomNumber"]),
