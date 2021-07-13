@@ -1,18 +1,53 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="header-container">
+      <Header
+      @change-game-button="changeGameButton"
+      :gameInActive="gameInActive"
+      :gameActive="gameActive"
+    />
+    </div>
+    <div class="body-container">
+      <Body v-if="gameActive" />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Header from "../components/Header";
+import Body from "../components/Body";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    Header,
+    Body
+  },
+  data() {
+    return {
+      gameInActive: true,
+      gameActive: false,
+    };
+  },
+  methods: {
+    changeGameButton() {
+      this.gameInActive = !this.gameInActive;
+      this.gameActive = !this.gameActive;
+    },
+  },
+};
 </script>
+
+<style scoped>
+  .home {
+    align-content: center;
+  }
+
+  .header-container{
+    height: 10rem;
+  }
+
+  .body-container{
+    margin-top: 5rem;
+  }
+</style>
