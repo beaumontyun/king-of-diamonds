@@ -5,7 +5,7 @@
       @btn-click="$emit('change-game-button')"
       :buttonText="gameInActive ? 'Start' : 'Restart'"
       :buttonColor="gameInActive ? '#90ee90' : '#FED8B1'"
-      @click="startCounter(); setRandomNumber()"
+      @click="startCounter(); setRandomNumber(); pressAlertTimer()"
     />
     <StartResetButton
       v-else
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setRandomNumber"]),
-    ...mapActions(["startCounter", "resetCounter"]),
+    ...mapActions(["startCounter", "resetCounter", "pressAlertTimer"]),
   },
   emits: ["change-game-button"],
 };
