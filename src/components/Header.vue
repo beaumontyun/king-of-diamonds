@@ -1,4 +1,5 @@
 <template>
+  <!-- Header conttainer - it contracts game start and game reset -->
   <div class="header-container">
     <StartResetButton
       v-if="gameInActive"
@@ -18,6 +19,7 @@
       @click="resetCounter"
     />
   </div>
+  <!-- Game status container is used to change instructions to player dynamically -->
   <div class="gameStatusContainer">
     <div class="initialInstruction" v-if="gameInActive">
       <p>Press Start to Begin</p>
