@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h3 v-if="clickAlert">Get ready to press the button!</h3>
-    <h3 v-else>Press Now!</h3>
-    
-    <BigOButton @click="playerButtonPress" />
+    <BigOButton :disabled="isDisabled" @click="playerButtonPress" />
   </div>
 </template>
 
@@ -21,7 +18,10 @@ export default {
     BigOButton,
   },
   computed: {
-    ...mapState(["clickAlert", "randomNumber", "counter"])
+    ...mapState(["clickAlert"]),
+    isDisabled: function() {
+      return !this.clickAlert
+    }
   },
   methods: {
     ...mapActions(["playerButtonPress"]),

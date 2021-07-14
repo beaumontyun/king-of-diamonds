@@ -5,7 +5,10 @@
       @btn-click="$emit('change-game-button')"
       :buttonText="gameInActive ? 'Start' : 'Restart'"
       :buttonColor="gameInActive ? '#90ee90' : '#FED8B1'"
-      @click="startCounter(); setRandomNumber(); pressAlertTimer()"
+      @click="
+        startCounter();
+        setRandomNumber();
+      "
     />
     <StartResetButton
       v-else
@@ -15,10 +18,16 @@
       @click="resetCounter"
     />
   </div>
-  <div class="initialInstruction" v-if="gameInActive">
-    <p>Press Start to Begin</p>
+  <div class="gameStatusContainer">
+    <div class="initialInstruction" v-if="gameInActive">
+      <p>Press Start to Begin</p>
+    </div>
+    <div class="gameStartTimer" v-else-if="gameStartTimer > 0">
+      {{ gameStartTimer }}
+    </div>
+    <div class="gameAlert" v-else-if="clickAlert"><p>Press now!</p></div>
+    <div class="loadingAfterGameStarts" v-else><p>Get Ready...</p></div>
   </div>
-  <div class="gameStartTimer" v-else>{{ gameStartTimer }}</div>
 </template>
 
 <script>
@@ -34,11 +43,11 @@ export default {
     gameActive: Boolean,
   },
   computed: {
-    ...mapState(["gameStartTimer"]),
+    ...mapState(["gameStartTimer", "clickAlert"]),
   },
   methods: {
     ...mapMutations(["setRandomNumber"]),
-    ...mapActions(["startCounter", "resetCounter", "pressAlertTimer"]),
+    ...mapActions(["startCounter", "resetCounter"]),
   },
   emits: ["change-game-button"],
 };
@@ -53,7 +62,7 @@ export default {
   font-size: 5rem;
   font: bold;
 }
-.initialInstruction {
+.gameStatusContainer {
   margin-top: 1rem;
   font-size: 2rem;
   font: bold;
