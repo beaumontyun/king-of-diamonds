@@ -7,8 +7,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
-    name: "BigOButton"
+    name: "BigOButton",
+    computed: {
+      ...mapState(["buttonPressed"])
+    }
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BigOButton :disabled="isDisabled" @click="playerButtonPress" />
+    <BigOButton @click.once="playerButtonPress" />
   </div>
 </template>
 
@@ -19,9 +19,6 @@ export default {
   },
   computed: {
     ...mapState(["clickAlert"]),
-    isDisabled: function() {
-      return !this.clickAlert
-    }
   },
   methods: {
     ...mapActions(["playerButtonPress"]),

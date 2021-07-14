@@ -30,6 +30,9 @@
     <div class="gameAlert" v-else-if="clickAlert"><p>Press now!</p></div>
     <div class="loadingAfterGameStarts" v-else><p>Get Ready...</p></div>
   </div>
+  <div v-if="buttonPressed" class="resultContainer">
+    <p>{{ stringResult }}</p>
+  </div>
 </template>
 
 <script>
@@ -45,7 +48,7 @@ export default {
     gameActive: Boolean,
   },
   computed: {
-    ...mapState(["gameStartTimer", "clickAlert"]),
+    ...mapState(["gameStartTimer", "clickAlert", "stringResult", "buttonPressed"]),
   },
   methods: {
     ...mapMutations(["setRandomNumber"]),

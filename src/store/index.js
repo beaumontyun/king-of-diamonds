@@ -15,10 +15,14 @@ export default createStore({
     nowTime: Number,
     // clickedTimer: 
     clickedTimer: Number,
+    // buttonPressed: records whether player pressed the button or not
+    buttonPressed: false,
     // finalResult: player's reaction time
     finalResult: Number,
     // clickAlert: alerts player to click the Big-O-Button
     clickAlert: false,
+    // stringResult
+    stringResult: String
   },
 
   mutations: {
@@ -75,6 +79,8 @@ export default createStore({
     },
     
     playerButtonPress({ state }) {
+      state.buttonPressed = true;
+
       // on clicking the Big-O-Button, the current time is logged to the state
       let clickedTime = new Date().getTime();
       state.clickedTimer = clickedTime;
@@ -93,9 +99,14 @@ export default createStore({
       let tdms = Math.abs(timeDifference % 1000);
       let tds = Math.floor((timeDifference / 1000) % 60);
 
+      let toStringResult = tds.toString() + '.' + tdms.toString()
+
+      // Turn results to string value for displaying result to the player
+      state.stringResult = toStringResult > 0 ? ('Your reaction was ' + toStringResult + ' seconds!') : ('You pressed too soon! Restart and go again!')
+
       // Display events/result in the console // TODO state's information to be used in other game features.
       state.finalResult > state.randomNumber ?
-        console.log('The timer was: ' + state.randomNumberCounter + ' milliseconds. ' + 'Your reaction was: ' + tds + '.' + tdms + ' seconds.' + ' Total time passed: ' + s + '.' + ms + ' seconds')
+        console.log('The timer was: ' + state.randomNumberCounter + ' milliseconds. ' + 'Your reaction was: ' + toStringResult + ' seconds.' + ' Total time passed: ' + s + '.' + ms + ' seconds')
         : console.log('You have clicked too soon!')
     },
 
@@ -104,6 +115,7 @@ export default createStore({
       state.gameStartTimer = 3;
       state.counter = false;
       state.clickAlert = false;
+      state.buttonPressed = false;
       console.clear()
     }
   },
