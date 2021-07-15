@@ -1,20 +1,29 @@
 <template>
   <div id="nav">
-    <router-link to="/login">Login</router-link> | 
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link v-if="!isLoggedIn" @click="resetCounter" to="/login">Login</router-link>
+    <router-link v-if="isLoggedIn" @click="resetCounter" to="/">Home</router-link>
+    <router-link v-if="isLoggedIn" @click="resetCounter" to="/about">About</router-link>
+    <router-link v-if="isLoggedIn" @click="resetCounter" to="/profile">Profile</router-link>
   </div>
   <router-view />
   <Footer />
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Footer from "./components/Footer";
 
 export default {
   components: {
     Footer,
   },
+  methods: {
+    ...mapActions(["resetCounter"]),
+
+  },
+  computed: {
+    ...mapGetters(["isLoggedIn"])
+  }
 };
 </script>
 

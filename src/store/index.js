@@ -22,7 +22,10 @@ export default createStore({
     // clickAlert: alerts player to click the Big-O-Button
     clickAlert: false,
     // stringResult
-    stringResult: String
+    stringResult: String,
+    // login and JWT states
+    user: null,
+    token: null,
   },
 
   mutations: {
@@ -36,11 +39,25 @@ export default createStore({
       state.randomNumber = randomNum;
       state.randomNumberCounter = randomNumCounter;
       console.log('Time until you need to press: ' + randomNum);
+    },
+
+    setUser(state, user) {
+      state.user = user;
+    },
+
+    setToken(state, token) {
+      state.token = token;
+    },
+    logOut(state, payload) {
+      state.user = payload;
+      state.token = payload;
+      console.log(state.user && state.token)
     }
   },
 
   // Note: all timer needs to be in actions section, as actions deal with asynchronous functions.
   actions: {
+    // startCounter governs the primary and secondary timer to run the game. Note: be careful of time format bug (seconds vs milliseconds)
     async startCounter({ state }) {
       // set initial state for this timer function:
       state.counter = true;
@@ -67,8 +84,8 @@ export default createStore({
       // Otherwise, the clock will continue to run irrespective the player has reset the game or not.
       while (state.randomNumber > 0 && state.gameStartTimer == 0) {
         await new Promise(resolve => setTimeout(resolve, 10));
-          state.randomNumber = state.randomNumber - 0.01
-          // console.log(state.randomNumber)
+        state.randomNumber = state.randomNumber - 0.01
+        // console.log(state.randomNumber)
 
         // set clickAlert state - clickAlert state is used throughout the app to manage alerts and div dynamically and sequence.
         if (state.randomNumber < 0) {
@@ -77,7 +94,8 @@ export default createStore({
         }
       }
     },
-    
+
+    // playerButtonPress governs the event after player pressed the Big-O-Button - ie. whether the player pressed too soon or not. etc.
     playerButtonPress({ state }) {
       state.buttonPressed = true;
 
@@ -110,19 +128,23 @@ export default createStore({
         : console.log('You have clicked too soon!')
     },
 
-    // Master game reset - reset everything back to original state
+    // Master game reset - reset everything back to original state.
+    // This is also executed in nav tabs so that the game is reset when the player switch to another page.
     resetCounter({ state }) {
       state.gameStartTimer = 3;
       state.counter = false;
       state.clickAlert = false;
       state.buttonPressed = false;
       console.clear()
-    }
+    },
   },
   // getters: to be used when you want to evaluate many set of values (e.g. score board.)
   getters: {
-
+    isLoggedIn(state) {
+      return !!state.token;
+    }
   },
+
   modules: {
 
   }

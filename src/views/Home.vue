@@ -2,10 +2,10 @@
   <div class="home">
     <div class="header-container">
       <Header
-      @change-game-button="changeGameButton"
-      :gameInActive="gameInActive"
-      :gameActive="gameActive"
-    />
+        @change-game-button="changeGameButton"
+        :gameInActive="gameInActive"
+        :gameActive="gameActive"
+      />
     </div>
     <div class="body-container">
       <Body v-if="gameActive" />
@@ -21,7 +21,7 @@ export default {
   name: "Home",
   components: {
     Header,
-    Body
+    Body,
   },
   data() {
     return {
@@ -39,15 +39,15 @@ export default {
 </script>
 
 <style scoped>
-  .home {
-    align-content: center;
-  }
+.home {
+  align-content: center;
+}
 
-  .header-container{
-    height: 10rem;
-  }
+.header-container {
+  height: 10rem;
+}
 
-  .body-container{
-    margin-top: 5rem;
-  }
+.body-container {
+  margin-top: 5rem;
+}
 </style>
